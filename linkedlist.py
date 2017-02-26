@@ -1,16 +1,16 @@
 class LinkedListNode():
 
-    def __init__(self, value, next_node=None):
+    def __init__(self, value, nextnode=None):
         self.value = value
-        self._next_node = next_node
+        self._nextnode = nextnode
 
 
     def next(self):
-        return self._next_node
+        return self._nextnode
 
 
-    def setNextNode(self, next_node):
-        self._next_node = next_node
+    def setNextNode(self, nextnode):
+        self._nextnode = nextnode
 
 
 
@@ -29,17 +29,18 @@ class LinkedList():
             self.firstnode = next
 
 
-    def insertBetween(self, value, prev_node=None, next_node=None):
-        newNode = LinkedListNode(value, next_node)
+    def insertBetween(self, value, prev_node=None, nextnode=None):
+        """Insert a node in between two given nodes, O(1)"""
+        newnode = LinkedListNode(value, nextnode)
 
         if prev_node:
-            prev_node.setNextNode(newNode)
+            prev_node.setNextNode(newnode)
 
-        return newNode
+        return newnode
 
 
     def insertBefore(self, value, node):
-
+        """Insert value as the previous node just before a given node in O(n)"""
         if node == self.firstnode:
             return self.insertFirstNode(value)
         else:
@@ -52,12 +53,84 @@ class LinkedList():
 
 
     def insertAfter(self, value, node):
+        """Insert value as the next node after a given node in O(1)"""
         return self.insertBetween(value, node, node.next())
 
 
     def insertFirstNode(self, value):
+        """Insert value as first node of the linked list in O(1)"""
         self.firstnode = self.insertBetween(value, None, self.firstnode)
         return self.firstnode
+
+
+    def insertLastNode(self, value):
+        """Insert value as the last node of the linked list in O(n)"""
+        lastnode = self.firstnode
+
+        while lastnode.next():
+            lastnode = lastnode.next()
+
+        return self.insertBetween(value, lastnode, None)
+
+
+    def removeNode(self, node):
+        """Removes the given node in O(n)"""
+        if node == self.firstnode:
+            self.removeFirstNode()
+        else:
+            prev = self.firstnode
+            next = node.next()
+            while prev.next() != node:
+                prev = prev.next()
+            self.removeBetween(prev, next)
+
+
+    def removeBetween(self, prev, next):
+        """Removes a node in between two given nodes, O(1)"""
+        if prev is None:
+            return self.removeFirstNode()
+        else:
+            removednode = prev.next()
+            removednode.setNextNode(None)
+            prev.setNextNode(next)
+            return removednode
+
+
+    def removeBeforeNode(self, node):
+        """Removes the node just before the given node in O(n)"""
+        if node == self.firstnode:
+            raise LinkedListError('Can not remove a node before firstnode')
+
+        prev = None
+        removednode = self.firstnode
+        while removednode.next() != node:
+            prev = removednode
+            removednode = removednode.next()
+
+        return self.removeBetween(prev, node)
+
+
+    def removeFirstNode(self):
+        """Removes the first node of the linked list, O(1)"""
+        removednode = self.firstnode
+        self.firstnode = self.firstnode.next()
+        removednode.setNextNode(None)
+        return removednode
+
+
+    def removeLastNode(self):
+        """Removes the last node of the linked list in O(n)"""
+        prev = None
+        lastnode = self.firstnode
+        while lastnode:
+            prev = lastnode
+            lastnode = lastnode.next()
+
+        if prev == self.firstnode:
+            return self.removeFirstNode()
+        else:
+            prev.setNextNode(None)
+            return lastnode
 
 
     def items(self):
@@ -68,4 +141,9 @@ class LinkedList():
         while item:
             yield item
             item = item.next()
+
+
+class LinkedListError(Exception):
+    def __init__(self, msg):
+        self.message = msg
 
