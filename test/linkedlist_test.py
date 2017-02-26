@@ -1,5 +1,5 @@
 import unittest
-from linkedlist import LinkedList, LinkedListNode
+from linkedlist import LinkedList, LinkedListNode, LinkedListError
 
 class TestLinkedList(unittest.TestCase):
 
@@ -96,6 +96,11 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(linked_list.removeBeforeNode(node).value, 1)
         self.assertEqual(len([i for i in linked_list.items()]), 1)
 
+    def test_remove_before_node_first_node(self):
+        linked_list = LinkedList([1, 2, 3])
+        with self.assertRaises(LinkedListError):
+            linked_list.removeBeforeNode(linked_list.firstnode)
+
     def test_remove_first_node(self):
         linked_list = LinkedList([1, 2, 3])
         removed = linked_list.removeFirstNode()
@@ -119,4 +124,22 @@ class TestLinkedList(unittest.TestCase):
         removed = linked_list.removeLastNode()
         self.assertEqual(removed.value, 1)
         self.assertEqual(len([i for i in linked_list.items()]), 0)
+
+    def test_remove_after_node(self):
+        linked_list = LinkedList([1, 2, 3])
+        self.assertEqual(len([i for i in linked_list.items()]), 3)
+        node = linked_list.firstnode.next()
+        self.assertEqual(linked_list.removeAfterNode(node).value, 3)
+        self.assertEqual(len([i for i in linked_list.items()]), 2)
+        node = linked_list.firstnode
+        self.assertEqual(linked_list.removeAfterNode(node).value, 2)
+        self.assertEqual(len([i for i in linked_list.items()]), 1)
+
+    def test_remove_after_node_last_node(self):
+        linked_list = LinkedList([1, 2, 3])
+        self.assertEqual(len([i for i in linked_list.items()]), 3)
+        node = linked_list.firstnode.next().next()
+        with self.assertRaises(LinkedListError):
+            linked_list.removeAfterNode(node)
+        self.assertEqual(len([i for i in linked_list.items()]), 3)
 

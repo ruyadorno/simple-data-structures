@@ -15,7 +15,7 @@ class LinkedListNode():
 
 
 class LinkedList():
-    """Builds a LinkedList out of a list"""
+    """Builds a LinkedList out of a list and provides many helper methods"""
 
     def __init__(self, from_list=[]):
 
@@ -108,6 +108,15 @@ class LinkedList():
             removednode = removednode.next()
 
         return self.removeBetween(prev, node)
+
+
+    def removeAfterNode(self, node):
+        """Removes the node just after the given node in O(1)"""
+        if node.next() == None:
+            raise LinkedListError('Can not remove a node after the last node')
+
+        removednode = node.next()
+        return self.removeBetween(node, removednode.next())
 
 
     def removeFirstNode(self):
