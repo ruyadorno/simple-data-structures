@@ -1,4 +1,4 @@
-# simple-data-structures
+# simple-data-structures [![Build Status](https://travis-ci.org/ruyadorno/simple-data-structures.svg?branch=master)](https://travis-ci.org/ruyadorno/simple-data-structures)
 
 Basic data structures implementation with good tests and helper functions, so that I can learn all the fundamentals.
 
