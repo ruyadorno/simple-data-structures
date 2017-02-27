@@ -5,6 +5,7 @@ Basic data structures implementation with good tests and helper functions, so th
 ## What's inside?
 
 - :link: [LinkedList](./linkedlist.py)
+- :link::link: [DoublyLinkedList](./doublylinkedlist.py)
 
 ## License
 
