@@ -6,6 +6,7 @@ Basic data structures implementation with good tests and helper functions, so th
 
 - :link: [LinkedList](./linkedlist.py)
 - :link::link: [DoublyLinkedList](./doublylinkedlist.py)
+- :books: [Stack](./stack.py)
 
 ## License
 
